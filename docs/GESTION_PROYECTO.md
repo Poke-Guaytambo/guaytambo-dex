@@ -25,12 +25,13 @@ Proyecto de la organización: [Ambato Limpiecito](https://github.com/orgs/Poke-G
 | **Listo para hacer** | Se puede empezar ya: no depende de ningún issue pendiente |
 | **En espera (depende de otro issue)** | Es del avance, pero necesita que antes termine otro. La sección "Depende de" del issue dice cuál |
 | **Fuera de alcance** | No se hace para el avance actual; no lo tomes |
+| **Terminado** | El issue ya se fusionó y se cerró |
 
-Cuando se fusiona un issue, los que dependían de él pasan de *En espera* a *Listo para hacer*.
+Cuando se fusiona un issue, pasa a *Terminado* y los que dependían de él pasan de *En espera* a *Listo para hacer*.
 
 **Campo Estado** (quién está trabajando): Todo · In Progress · Done.
 
-**Vistas:** *Todos los issues*, *Listo para hacer*, *En espera* y *Fuera de alcance* (las tres últimas filtran por Plan).
+**Vistas:** *Todos los issues*, *Listo para hacer*, *En espera*, *Fuera de alcance* y *Terminado* (las cuatro últimas filtran por Plan).
 
 **Otros campos:** Prioridad (Alta/Media/Baja), Requisito (ID, p. ej. `RF-03.2`) y Zona.
 
