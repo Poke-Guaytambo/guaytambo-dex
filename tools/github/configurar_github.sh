@@ -61,7 +61,7 @@ cuerpo_final() {
       cuerpo+="- [ ] #${NUMEROS[$d]}"$'\n'
     done
   fi
-  cuerpo+=$'\nVer docs/REQUISITOS.md y docs/ARQUITECTURA.md.\n'
+  cuerpo+=$'\n> Las rutas de archivos del juego (`scenes/`, `scripts/`, `assets/`...) son relativas a la carpeta `game/` (equivalen a `res://` en Godot).\n\nVer docs/REQUISITOS.md y docs/ARQUITECTURA.md.\n'
   printf '%s' "$cuerpo"
 }
 

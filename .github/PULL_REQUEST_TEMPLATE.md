@@ -18,5 +18,5 @@ Closes #
 - [ ] El proyecto abre y corre en Godot 4.7.2 sin errores ni advertencias nuevas
 - [ ] Probé el cambio manualmente
 - [ ] No incluye `.godot/`, builds ni archivos temporales
-- [ ] Assets con licencia libre registrados en `assets/CREDITS.md`
+- [ ] Assets con licencia libre registrados en `game/assets/CREDITS.md`
 - [ ] Actualicé `docs/` si cambia la arquitectura o un requisito

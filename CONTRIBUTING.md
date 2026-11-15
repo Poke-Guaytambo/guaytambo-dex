@@ -61,7 +61,7 @@ Commits pequeños y con un solo propósito.
 - [ ] Rama y commits siguen el estándar.
 - [ ] El proyecto abre y corre en Godot 4.7.2.
 - [ ] Sin archivos generados (`.godot/`, builds).
-- [ ] Assets con licencia libre y procedencia registrada en `assets/CREDITS.md`.
+- [ ] Assets con licencia libre y procedencia registrada en `game/assets/CREDITS.md`.
 - [ ] Documentación actualizada si cambia la arquitectura.
 
 ## 5. Convenciones de Godot

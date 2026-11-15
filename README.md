@@ -53,8 +53,18 @@ Solo lugares turísticos del **cantón Ambato** (se excluyen otros cantones de T
 ## Puesta en marcha
 
 1. Descarga **Godot 4.7.2 estable (versión estándar, no .NET)** desde [godotengine.org](https://godotengine.org/download/archive/). No uses otra versión: abrir el proyecto con una distinta puede alterar los archivos de escena.
-2. Clona el repositorio y abre la carpeta con Godot.
-3. Lee [CONTRIBUTING.md](CONTRIBUTING.md) antes de crear ramas o PRs.
+2. Clona el repositorio y cambia a la rama `develop`.
+3. En el gestor de proyectos de Godot pulsa **Importar** y elige **`game/project.godot`**.
+4. Lee [CONTRIBUTING.md](CONTRIBUTING.md) antes de crear ramas o PRs.
+
+## Estructura del repositorio
+
+```
+game/     proyecto de Godot (juego)
+docs/     requisitos, arquitectura y gestión del proyecto
+tools/    herramientas fuera del juego (pipeline de mapas, scripts de GitHub)
+.github/  plantillas de issues y PR, y checks
+```
 
 ## Cómo contribuir
 

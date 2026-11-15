@@ -373,7 +373,7 @@ Un **proceso repetible** que convierta datos reales de OpenStreetMap en un mapa 
 1. Carpeta `tools/osm_pipeline/` con un `README.md` que explique cómo ejecutarlo paso a paso y un `requirements.txt` (GeoPandas, Shapely, pyproj).
 2. Guardar la consulta de Overpass Turbo (`consultas/zona1.overpassql`) que obtiene calles, senderos, edificios, agua y vegetación de la Quinta, y cómo exportar el `.geojson`.
 3. Script `osm_to_tiled.py`: lee el `.geojson`, proyecta a **UTM 17S (EPSG:32717)**, convierte metros a tiles (parámetro: metros por tile) y genera un `.tmx` con capas separadas (suelo, obstáculos, decoración).
-4. Instalar el plugin **YATI 2.2.9** en `addons/yati/`, activarlo e importar el `.tmx` de prueba en Godot. Si Godot se congela al importar, desactivar "Use multiple threads" (Configuración del editor → Import).
+4. Instalar el plugin **YATI 2.2.9** en `game/addons/yati/`, activarlo e importar el `.tmx` de prueba en Godot. Si Godot se congela al importar, desactivar "Use multiple threads" (Configuración del editor → Import).
 5. Probar con una zona pequeña y documentar el resultado.
 6. Dejar la atribución de OpenStreetMap (licencia ODbL) en la documentación.
 

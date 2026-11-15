@@ -115,27 +115,33 @@ Exploración ─ hablar con NPC ─► misión EN_CURSO
 
 ## 7. Estructura de carpetas
 
+El repositorio separa el **juego** (proyecto de Godot, carpeta `game/`) de la documentación, las herramientas y la configuración de GitHub. Godot abre `game/project.godot`; todas las rutas del juego (`res://`) son relativas a `game/`.
+
 ```
 /
-├── project.godot
-├── assets/              # sprites, tilesets, audio  (+ CREDITS.md)
-├── autoload/            # GameState, QuestManager, ...
-├── resources/           # scripts de Custom Resources y archivos .tres
-│   ├── creatures/  moves/  quests/  capsules/
-├── scenes/
-│   ├── main/            # escena raíz
-│   ├── overworld/       # jugador, NPC, encuentro, zonas
-│   ├── battle/
-│   └── ui/
-├── scripts/             # lógica compartida
-├── maps/                # .tmx y mapas importados
-├── tools/               # pipeline OSM → Tiled (Python)
-└── docs/
+├── game/                      # proyecto de Godot 4.7.2 (res:// apunta aquí)
+│   ├── project.godot
+│   ├── assets/                # sprites, tilesets, audio  (+ CREDITS.md)
+│   ├── autoload/              # GameState, QuestManager, ...
+│   ├── resources/             # scripts de Custom Resources y archivos .tres
+│   │   └── creatures/  moves/  quests/  capsules/
+│   ├── scenes/
+│   │   ├── main/              # escena raíz
+│   │   ├── overworld/         # jugador, NPC, encuentro, zonas
+│   │   ├── battle/
+│   │   └── ui/
+│   ├── scripts/               # lógica compartida
+│   └── maps/                  # .tmx y mapas importados
+├── tools/                     # herramientas fuera del juego
+│   ├── osm_pipeline/          # pipeline OSM → Tiled (Python)
+│   └── github/                # scripts de configuración de GitHub
+├── docs/                      # requisitos, arquitectura, gestión
+└── .github/                   # plantillas de issues y PR, workflows
 ```
 
 ## 8. Configuración del proyecto
 
-- **Motor:** Godot 4.7.2 estable (versión estándar, no .NET). El proyecto base está en `project.godot` en la raíz.
+- **Motor:** Godot 4.7.2 estable (versión estándar, no .NET). El proyecto está en `game/project.godot`.
 - **Renderizador:** *Compatibility* (OpenGL), más tolerante con GPU modestas (RNF-01) y apto para exportar a Web. Decisión provisional; se confirma con las pruebas en las laptops del club.
 - **Resolución base:** **480×270** (16:9), con ventana inicial de 1440×810 y escalado entero del viewport (`stretch mode = viewport`, `scale mode = integer`).
 - **Tamaño de tile:** **16×16 px**.
@@ -148,7 +154,7 @@ Exploración ─ hablar con NPC ─► misión EN_CURSO
 | `interactuar` | E, Enter y Enter del teclado numérico |
 | `cancelar` | Esc |
 
-- **Escena principal:** `scenes/main/main.tscn` (script `scripts/main.gd`).
+- **Escena principal:** `res://scenes/main/main.tscn` (script `scripts/main.gd`).
 
 ## 9. Pipeline de mapas
 
