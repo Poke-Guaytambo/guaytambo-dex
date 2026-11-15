@@ -20,11 +20,11 @@ body:
     id: licencia
     attributes:
       label: Fuente y licencia (si es de terceros)
-      description: Debe ser libre (RNF-03). Se registra en assets/CREDITS.md.
+      description: Debe ser libre (RNF-03). Se registra en game/assets/CREDITS.md.
   - type: textarea
     id: criterios
     attributes:
       label: Criterios de aceptación
       value: |
         - [ ] Archivo en la carpeta correcta y con nombre en snake_case
-        - [ ] Licencia registrada en assets/CREDITS.md
+        - [ ] Licencia registrada en game/assets/CREDITS.md

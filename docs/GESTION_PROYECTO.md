@@ -9,26 +9,30 @@ Idea / requisito ─► Issue (plantilla) ─► Tablero ─► Rama ─► PR �
 ```
 
 1. Todo trabajo empieza con un **issue** creado desde una plantilla (no se aceptan issues en blanco).
-2. El issue entra al proyecto **Ambato Limpiecito** en la columna *Por hacer* y se le asigna responsable, prioridad e hito.
-3. Quien lo toma lo mueve a *En curso* y crea la rama `tipo/descripcion` (ver [CONTRIBUTING.md](../CONTRIBUTING.md)).
+2. El issue entra al proyecto, con su Plan (*Listo para hacer*, *En espera* o *Fuera de alcance*), responsable y hito.
+3. Quien toma un issue *Listo para hacer* se lo asigna, lo mueve a *In Progress* y crea la rama `tipo/descripcion` (ver [CONTRIBUTING.md](../CONTRIBUTING.md)).
 4. Al abrir el PR (hacia `develop`) se usa la plantilla y se escribe `Closes #N`.
 5. Otra persona revisa y aprueba; se hace *Squash and merge* y el issue se cierra solo. Al cerrar un hito, un PR `develop` → `main` (con *merge commit*) publica la versión.
 
 ## 2. Tablero (GitHub Projects)
 
-Proyecto de la organización: **Ambato Limpiecito**. Vistas recomendadas:
+Proyecto de la organización: [Ambato Limpiecito](https://github.com/orgs/Poke-Guaytambo/projects/1).
 
-| Vista | Tipo | Uso |
-|-------|------|-----|
-| Tablero | Board agrupado por Estado | Seguimiento diario |
-| Por persona | Table agrupada por Responsable | Reparto de carga |
-| Hitos | Roadmap por Hito | Planificación del avance |
+**Campo Plan** (qué se puede hacer y qué no):
 
-**Columnas (campo Estado):** Backlog · Por hacer · En curso · En revisión · Hecho.
+| Plan | Significado |
+|------|-------------|
+| **Listo para hacer** | Se puede empezar ya: no depende de ningún issue pendiente |
+| **En espera (depende de otro issue)** | Es del avance, pero necesita que antes termine otro. La sección "Depende de" del issue dice cuál |
+| **Fuera de alcance** | No se hace para el avance actual; no lo tomes |
 
-**Campos personalizados:** Prioridad (Alta/Media/Baja), Requisito (ID, p. ej. `RF-03.2`), Zona (Zona 1–4 / Transversal).
+Cuando se fusiona un issue, los que dependían de él pasan de *En espera* a *Listo para hacer*.
 
-Automatizaciones (Project → Workflows): issue nuevo → *Backlog*; PR enlazado abierto → *En revisión*; issue cerrado → *Hecho*.
+**Campo Estado** (quién está trabajando): Todo · In Progress · Done.
+
+**Vistas:** *Todos los issues*, *Listo para hacer*, *En espera* y *Fuera de alcance* (las tres últimas filtran por Plan).
+
+**Otros campos:** Prioridad (Alta/Media/Baja), Requisito (ID, p. ej. `RF-03.2`) y Zona.
 
 ## 3. Issues
 
@@ -78,11 +82,14 @@ Reglas:
 - **Reunión semanal (30 min):** revisar el tablero, desbloquear tareas y repartir las siguientes. Se anima a tomar tareas de un área que no se haya trabajado antes (etiqueta `good first issue`); quien la hace pide la revisión a alguien con experiencia en esa área.
 - **Revisión de avance:** al cerrar cada hito, demo jugable en la laptop del club.
 
-## 7. Configuración de la organización (checklist para administradores)
+## 7. Configuración del repositorio y la organización
 
-- [ ] Dar rol **Write** en el repo a todos los miembros (directo, o con un único equipo `desarrollo` si el grupo crece). No se crean equipos por área: todos pueden trabajar en todo.
-- [x] Protección de `main` y `develop` (reglas "Proteger main" y "Proteger develop"): PR obligatorio, 1 aprobación, check `convenciones` requerido, sin push directo ni force-push. `develop` exige además historial lineal.
-- [ ] Activar *Squash merge* únicamente y borrado automático de ramas al fusionar.
-- [ ] Ejecutar `bash tools/github/configurar_github.sh` (etiquetas, hito, proyecto e issues iniciales). Requiere `gh auth login` y `gh auth refresh -s project`.
-- [ ] Configurar vistas y automatizaciones del proyecto (sección 2).
+Ya configurado:
+- Rol de escritura para todos los miembros de la organización (permiso base *Write*).
+- Rama `main` y `develop` protegidas (reglas "Proteger main" y "Proteger develop"): PR obligatorio, 1 aprobación, check `convenciones` requerido, sin push directo ni force-push. `develop` exige además historial lineal.
+- *Squash merge* por defecto y merge commit solo para el PR `develop` → `main`; las ramas se borran al fusionar.
+- Etiquetas, hito, proyecto, vistas e issues de la Zona 1.
+
+Pendiente:
+- [ ] Invitar a todos los integrantes a la organización.
 - [ ] Definir la licencia del repositorio.
