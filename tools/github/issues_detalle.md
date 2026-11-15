@@ -3,7 +3,7 @@
 Dejar el **esqueleto del proyecto Godot** listo para que todo el equipo construya encima. No se juega nada todavía: solo se prepara el terreno y se acuerdan las reglas técnicas.
 
 ## Qué hay que hacer
-1. Crear el proyecto con **Godot 4.7.2 estable** (`project.godot` en la raíz del repo, nombre "Ambato Limpiecito"). Verificar que `config/features` diga 4.7.
+1. Crear el proyecto con **Godot 4.7.2 estable** (`project.godot` en la raíz del repo, nombre "Poke-Guaytambo"). Verificar que `config/features` diga 4.7.
 2. Crear las carpetas de `docs/ARQUITECTURA.md` §7: `assets/`, `autoload/`, `resources/`, `scenes/main`, `scenes/overworld`, `scenes/battle`, `scenes/ui`, `scripts/`, `maps/`. Las vacías llevan un archivo `.gitkeep`.
 3. Configurar pixel art: filtro de textura **nearest**, modo de estiramiento por viewport con escalado entero.
 4. Fijar la resolución base. **Propuesta: 480×270** (16:9, escala exacta ×4 a 1920×1080) con tiles de **16×16 px**. Registrar la decisión en `docs/ARQUITECTURA.md` §8.

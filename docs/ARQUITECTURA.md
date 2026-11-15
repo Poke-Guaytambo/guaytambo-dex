@@ -1,4 +1,4 @@
-# Arquitectura — Ambato Limpiecito
+# Arquitectura — Poke-Guaytambo
 
 **Estado:** propuesta inicial, a validar por el equipo y ajustar durante el desarrollo. Los requisitos están en [REQUISITOS.md](REQUISITOS.md).
 
@@ -135,9 +135,20 @@ Exploración ─ hablar con NPC ─► misión EN_CURSO
 
 ## 8. Configuración del proyecto
 
-- **Motor:** Godot 4.7.2 estable. **Renderizador:** se recomienda *Compatibility* (OpenGL), más tolerante con GPU modestas (RNF-01) y apto para exportar a Web; confirmar con pruebas en las laptops del club.
-- **Pixel art:** filtro de textura *nearest*, escalado entero del viewport y resolución base baja (por definir, p. ej. 480×270).
-- **Controles (Input Map):** `mover_*` (WASD y flechas), `interactuar` (E / Enter), `cancelar` (Esc).
+- **Motor:** Godot 4.7.2 estable (versión estándar, no .NET). El proyecto base está en `project.godot` en la raíz.
+- **Renderizador:** *Compatibility* (OpenGL), más tolerante con GPU modestas (RNF-01) y apto para exportar a Web. Decisión provisional; se confirma con las pruebas en las laptops del club.
+- **Resolución base:** **480×270** (16:9), con ventana inicial de 1440×810 y escalado entero del viewport (`stretch mode = viewport`, `scale mode = integer`).
+- **Tamaño de tile:** **16×16 px**.
+- **Pixel art:** filtro de textura *nearest* por defecto.
+- **Controles (Input Map):**
+
+| Acción | Teclas |
+|--------|--------|
+| `mover_arriba`, `mover_abajo`, `mover_izquierda`, `mover_derecha` | WASD y flechas |
+| `interactuar` | E, Enter y Enter del teclado numérico |
+| `cancelar` | Esc |
+
+- **Escena principal:** `scenes/main/main.tscn` (script `scripts/main.gd`).
 
 ## 9. Pipeline de mapas
 
