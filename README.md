@@ -38,6 +38,7 @@ Solo lugares turísticos del **cantón Ambato** (se excluyen otros cantones de T
 
 - [Requisitos funcionales y no funcionales](docs/REQUISITOS.md)
 - [Arquitectura](docs/ARQUITECTURA.md)
+- [Gestión del proyecto](docs/GESTION_PROYECTO.md)
 - [Guía de contribución](CONTRIBUTING.md)
 
 ## Stack tecnológico

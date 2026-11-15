@@ -1,0 +1,30 @@
+name: Arte / Audio
+description: Sprites, tilesets, UI, música o efectos de sonido
+title: "art: "
+labels: ["tipo: arte-audio"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Qué se necesita
+      description: Describe el asset, su uso en el juego y referencias visuales/sonoras.
+    validations:
+      required: true
+  - type: input
+    id: especificaciones
+    attributes:
+      label: Especificaciones
+      description: Tamaño, paleta, formato, duración, etc.
+      placeholder: "Sprite 32x32, 4 direcciones, 4 frames"
+  - type: input
+    id: licencia
+    attributes:
+      label: Fuente y licencia (si es de terceros)
+      description: Debe ser libre (RNF-03). Se registra en assets/CREDITS.md.
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      value: |
+        - [ ] Archivo en la carpeta correcta y con nombre en snake_case
+        - [ ] Licencia registrada en assets/CREDITS.md

@@ -1,0 +1,18 @@
+tipo: funcionalidad	0E8A16	Nueva funcionalidad del juego
+tipo: bug	D73A4A	Algo no funciona
+tipo: tarea	5319E7	Tarea técnica, configuración o documentación
+tipo: arte-audio	F9A825	Sprites, tilesets, UI, música y sonidos
+tipo: contenido	1D76DB	Textos, historia, misiones y criaturas
+área: overworld	BFD4F2	Mapa, jugador, NPCs y colisiones
+área: combate	BFD4F2	Combate por turnos
+área: misiones	BFD4F2	Misiones y progreso
+área: ui	BFD4F2	Interfaz, diálogos y cápsulas
+área: mapas-osm	BFD4F2	Pipeline OSM, Tiled y YATI
+área: infraestructura	BFD4F2	Repositorio, CI y herramientas
+prioridad: alta	B60205	Indispensable para el avance
+prioridad: media	FBCA04	Juego completo
+prioridad: baja	C2E0C6	Deseable
+estado: por triar	EDEDED	Pendiente de revisar y asignar
+estado: bloqueado	000000	Depende de otra tarea o decisión
+estado: necesita-info	D876E3	Faltan datos para continuar
+good first issue	7057FF	Buena tarea para empezar

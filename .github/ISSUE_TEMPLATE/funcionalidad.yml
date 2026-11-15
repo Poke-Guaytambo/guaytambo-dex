@@ -1,0 +1,44 @@
+name: Funcionalidad
+description: Nueva funcionalidad del juego ligada a un requisito
+title: "feat: "
+labels: ["tipo: funcionalidad"]
+body:
+  - type: input
+    id: requisito
+    attributes:
+      label: Requisito relacionado
+      description: ID en docs/REQUISITOS.md
+      placeholder: "RF-03.2"
+    validations:
+      required: true
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción
+      description: ¿Qué debe poder hacer el juego y por qué?
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      description: Lista verificable de lo que debe cumplirse.
+      value: |
+        - [ ] 
+        - [ ] 
+    validations:
+      required: true
+  - type: dropdown
+    id: hito
+    attributes:
+      label: Hito
+      options:
+        - Z1 – Avance (Zona 1)
+        - JC – Juego completo
+    validations:
+      required: true
+  - type: textarea
+    id: notas
+    attributes:
+      label: Notas técnicas / dependencias
+      description: Escenas, scripts o issues de los que depende.

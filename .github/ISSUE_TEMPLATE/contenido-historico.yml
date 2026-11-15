@@ -1,0 +1,26 @@
+name: Contenido histórico / textos
+description: Cápsulas históricas, diálogos, misiones y criaturas
+title: "content: "
+labels: ["tipo: contenido"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Contenido a redactar o verificar
+    validations:
+      required: true
+  - type: textarea
+    id: fuentes
+    attributes:
+      label: Fuentes verificables
+      description: Obligatorio para datos históricos (RNF-19).
+    validations:
+      required: true
+  - type: checkboxes
+    id: reglas
+    attributes:
+      label: Reglas de redacción
+      options:
+        - label: Máximo 3 a 4 líneas por pantalla
+        - label: Tono ameno, con dato curioso ("¿Sabías que…?")
+        - label: Ortografía revisada

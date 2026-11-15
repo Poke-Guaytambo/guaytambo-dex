@@ -1,0 +1,31 @@
+name: PR checks
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  convenciones:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Título del PR (Conventional Commits)
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          pattern='^(feat|fix|art|audio|map|docs|chore|refactor|test)(\([a-z0-9_-]+\))?: .{3,}'
+          if ! echo "$TITLE" | grep -Eq "$pattern"; then
+            echo "::error::El título debe seguir 'tipo(alcance): descripción'. Recibido: $TITLE"
+            exit 1
+          fi
+      - name: Nombre de la rama
+        env:
+          BRANCH: ${{ github.head_ref }}
+        run: |
+          pattern='^(feature|fix|art|audio|map|docs|chore)/[a-z0-9][a-z0-9-]*$'
+          if ! echo "$BRANCH" | grep -Eq "$pattern"; then
+            echo "::error::La rama debe ser 'tipo/descripcion-en-kebab-case'. Recibido: $BRANCH"
+            exit 1
+          fi

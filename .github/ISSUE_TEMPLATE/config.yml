@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentación del proyecto
+    url: https://github.com/Poke-Guaytambo/guaytambo-dex/tree/main/docs
+    about: Revisa los requisitos y la arquitectura antes de abrir un issue.

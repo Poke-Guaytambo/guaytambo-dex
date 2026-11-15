@@ -1,0 +1,25 @@
+# Godot 4
+.godot/
+*.translation
+export.cfg
+export_credentials.cfg
+.mono/
+data_*/
+mono_crash.*.json
+
+# Builds
+build/
+exports/
+
+# Python (pipeline de mapas)
+__pycache__/
+*.pyc
+.venv/
+venv/
+tools/osm_pipeline/data/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

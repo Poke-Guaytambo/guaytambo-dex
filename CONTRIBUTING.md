@@ -69,7 +69,7 @@ Commits pequeños y con un solo propósito.
 
 ## 6. Inicio del proyecto y arquitectura
 
-La arquitectura, la estructura de carpetas y el plan de construcción están en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md); los requisitos en [docs/REQUISITOS.md](docs/REQUISITOS.md). Si tu cambio altera la arquitectura, actualiza ese documento en el mismo PR.
+La gestión de issues, tablero y definiciones de "listo" y "terminado" está en [docs/GESTION_PROYECTO.md](docs/GESTION_PROYECTO.md). La arquitectura, la estructura de carpetas y el plan de construcción están en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md); los requisitos en [docs/REQUISITOS.md](docs/REQUISITOS.md). Si tu cambio altera la arquitectura, actualiza ese documento en el mismo PR.
 
 ## 7. Dudas
 

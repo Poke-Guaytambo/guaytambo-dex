@@ -1,0 +1,23 @@
+name: Tarea técnica / documentación
+description: Configuración, refactor, herramientas, pipeline de mapas o documentación
+title: "chore: "
+labels: ["tipo: tarea"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      value: |
+        - [ ] 
+    validations:
+      required: true
+  - type: textarea
+    id: notas
+    attributes:
+      label: Notas
