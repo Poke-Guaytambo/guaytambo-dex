@@ -11,8 +11,8 @@ Idea / requisito ─► Issue (plantilla) ─► Tablero ─► Rama ─► PR �
 1. Todo trabajo empieza con un **issue** creado desde una plantilla (no se aceptan issues en blanco).
 2. El issue entra al proyecto **Ambato Limpiecito** en la columna *Por hacer* y se le asigna responsable, prioridad e hito.
 3. Quien lo toma lo mueve a *En curso* y crea la rama `tipo/descripcion` (ver [CONTRIBUTING.md](../CONTRIBUTING.md)).
-4. Al abrir el PR se usa la plantilla y se escribe `Closes #N`.
-5. Otra persona revisa y aprueba; se hace *Squash and merge* y el issue se cierra solo.
+4. Al abrir el PR (hacia `develop`) se usa la plantilla y se escribe `Closes #N`.
+5. Otra persona revisa y aprueba; se hace *Squash and merge* y el issue se cierra solo. Al cerrar un hito, un PR `develop` → `main` (con *merge commit*) publica la versión.
 
 ## 2. Tablero (GitHub Projects)
 
@@ -70,7 +70,7 @@ Reglas:
 **Terminado (Definition of Done):**
 - Cumple todos los criterios de aceptación.
 - El proyecto abre y corre en Godot 4.7.2 sin errores nuevos.
-- PR revisado y fusionado en `main`.
+- PR revisado y fusionado en `develop`.
 - Documentación y créditos de assets actualizados.
 
 ## 6. Reuniones y cadencia sugerida
@@ -81,7 +81,7 @@ Reglas:
 ## 7. Configuración de la organización (checklist para administradores)
 
 - [ ] Dar rol **Write** en el repo a todos los miembros (directo, o con un único equipo `desarrollo` si el grupo crece). No se crean equipos por área: todos pueden trabajar en todo.
-- [ ] Activar protección de `main`: PR obligatorio, 1 aprobación, estado `PR checks` requerido, sin push directo, sin force-push.
+- [x] Protección de `main` y `develop` (reglas "Proteger main" y "Proteger develop"): PR obligatorio, 1 aprobación, check `convenciones` requerido, sin push directo ni force-push. `develop` exige además historial lineal.
 - [ ] Activar *Squash merge* únicamente y borrado automático de ramas al fusionar.
 - [ ] Ejecutar `bash tools/github/configurar_github.sh` (etiquetas, hito, proyecto e issues iniciales). Requiere `gh auth login` y `gh auth refresh -s project`.
 - [ ] Configurar vistas y automatizaciones del proyecto (sección 2).
