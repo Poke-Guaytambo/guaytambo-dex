@@ -7,7 +7,7 @@ Gracias por colaborar en **Ambato Limpiecito**. Para evitar conflictos (sobre to
 - **Godot 4.7.2 estable (estándar, no .NET).** Nadie debe abrir ni guardar el proyecto con otra versión.
 - Lenguaje: **GDScript**.
 - Si se decide subir de versión, se hace en un PR dedicado aprobado por todo el equipo.
-- Hito actual: **solo Zona 1 funcional** (ver [README](README.md)). No empieces trabajo de zonas 2–4 sin acuerdo previo.
+- Hito actual: **solo Zona 1 funcional** (ver [README](README.md) y [requisitos](docs/REQUISITOS.md)). No empieces trabajo de zonas 2–4 sin acuerdo previo.
 
 ## 2. Estándar de ramas
 
@@ -69,46 +69,7 @@ Commits pequeños y con un solo propósito.
 
 ## 6. Inicio del proyecto y arquitectura
 
-> **Sección por definir en equipo.** Se completará en la primera reunión técnica; hasta entonces, esta es la propuesta inicial a validar.
-
-### 6.1 Pasos de arranque (pendientes)
-
-- [ ] Crear el proyecto Godot 4.7.2 en la raíz del repositorio y fijar `config/features` a 4.7.
-- [ ] Agregar `.gitignore` y `.gitattributes` para Godot.
-- [ ] Definir resolución base y estilo de píxeles (filtrado *nearest*, escalado entero).
-- [ ] Configurar el mapa de entradas (`Input Map`): 4 direcciones, aceptar, cancelar.
-- [ ] Prototipo mínimo: jugador moviéndose en un mapa de prueba con colisiones.
-
-### 6.2 Estructura de carpetas propuesta
-
-```
-/
-├── project.godot
-├── assets/            # sprites, tilesets, audio (+ CREDITS.md)
-├── scenes/
-│   ├── overworld/     # mapas por zona, jugador, NPCs
-│   ├── battle/        # escena de combate
-│   └── ui/            # menús, diálogos, tarjeta histórica
-├── scripts/           # lógica compartida
-├── resources/         # Custom Resources (criaturas, habilidades, misiones, cápsulas)
-├── autoload/          # singletons globales
-├── tools/             # scripts Python del pipeline OSM → Tiled
-└── docs/
-```
-
-### 6.3 Arquitectura propuesta
-
-| Sistema | Enfoque | Requisito |
-|---------|---------|-----------|
-| Overworld | `CharacterBody2D` (jugador), `TileMapLayer` (mapa), `Area2D` (zonas, NPCs, triggers) | RF-01 |
-| Misiones | Autoload `QuestManager` con estados Pendiente / En curso / Completada; misiones como Custom Resources | RF-02 |
-| Combate | Escena independiente con máquina de estados: acción → ejecución → turno enemigo → resolución; criaturas y habilidades como Custom Resources | RF-03 |
-| Purificación | Cambio de paleta/shader del mapa y eliminación de sprites de basura al completar la misión | RF-04 |
-| Cápsulas históricas | Modal UI con efecto máquina de escribir; contenido en Custom Resources | RF-05 |
-| Progreso | Autoload `GameState` (zona actual, misiones, desbloqueos) | RF-02 / RF-04 |
-| Comunicación | Señales entre sistemas; evitar referencias directas entre escenas | — |
-
-Las decisiones finales de arquitectura se registran en `docs/arquitectura.md` mediante PR.
+La arquitectura, la estructura de carpetas y el plan de construcción están en [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md); los requisitos en [docs/REQUISITOS.md](docs/REQUISITOS.md). Si tu cambio altera la arquitectura, actualiza ese documento en el mismo PR.
 
 ## 7. Dudas
 
