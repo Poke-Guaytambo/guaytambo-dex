@@ -62,7 +62,6 @@ Solo lugares turísticos del **cantón Ambato** (se excluyen otros cantones de T
 ```
 game/     proyecto de Godot (juego)
 docs/     requisitos, arquitectura y gestión del proyecto
-tools/    herramientas fuera del juego (pipeline de mapas, scripts de GitHub)
 .github/  plantillas de issues y PR, y checks
 ```
 

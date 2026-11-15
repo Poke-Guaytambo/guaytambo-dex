@@ -1,6 +1,6 @@
 # Arquitectura — Poke-Guaytambo
 
-**Estado:** propuesta inicial, a validar por el equipo y ajustar durante el desarrollo. Los requisitos están en [REQUISITOS.md](REQUISITOS.md).
+**Estado:** vigente para el avance de la Zona 1. Se actualiza por PR cuando el equipo cierra una decisión. Los requisitos están en [REQUISITOS.md](REQUISITOS.md) y la forma de trabajar en [GESTION_PROYECTO.md](GESTION_PROYECTO.md).
 
 ## 1. Principios
 
@@ -10,7 +10,80 @@
 4. **Escenas pequeñas y reutilizables**, para que varias personas trabajen sin conflictos en archivos `.tscn`.
 5. **Vertical slice primero:** se construye la Zona 1 completa y las demás zonas la reutilizan.
 
-## 2. Visión general
+## 2. Estructura del repositorio
+
+El juego (proyecto de Godot) vive en `game/`; la documentación y la configuración de GitHub, fuera de él. Godot abre `game/project.godot` y todas las rutas `res://` son relativas a `game/`.
+
+```
+/
+├── game/                      # proyecto de Godot 4.7.2
+│   ├── project.godot
+│   ├── assets/                # sprites, tilesets, fuentes, audio  (+ CREDITS.md)
+│   ├── autoload/              # GameState, QuestManager, ...
+│   ├── resources/             # clases de Custom Resources y archivos .tres
+│   │   └── creatures/  moves/  quests/  capsules/
+│   ├── scenes/
+│   │   ├── main/              # escena raíz
+│   │   ├── overworld/         # jugador, NPC, encuentro y zonas
+│   │   ├── battle/
+│   │   ├── ui/
+│   │   └── pruebas/           # escenas de prueba de cada sistema
+│   ├── scripts/               # lógica compartida (subcarpetas: overworld/, battle/, ui/, pruebas/)
+│   └── maps/                  # .tmx y mapas importados
+├── docs/                      # requisitos, arquitectura y gestión
+└── .github/                   # plantillas de issues y PR, y checks
+```
+
+Se agregarán `game/addons/` (plugin YATI) y `tools/` (pipeline de mapas OSM) si el equipo retoma esa parte; hoy están fuera del avance.
+
+## 3. Configuración del proyecto
+
+- **Motor:** Godot 4.7.2 estable (versión estándar, no .NET).
+- **Renderizador:** *Compatibility* (OpenGL), más tolerante con GPU modestas (RNF-01) y apto para exportar a Web. Provisional hasta probar en las laptops del club.
+- **Resolución base:** **480×270** (16:9), ventana inicial de 1440×810, `stretch mode = viewport` y `scale mode = integer`.
+- **Tamaño de tile:** **16×16 px**.
+- **Pixel art:** filtro de textura *nearest* por defecto.
+- **Escena principal:** `res://scenes/main/main.tscn`.
+- **Controles (Input Map):**
+
+| Acción | Teclas |
+|--------|--------|
+| `mover_arriba`, `mover_abajo`, `mover_izquierda`, `mover_derecha` | WASD y flechas |
+| `interactuar` | E, Enter y Enter del teclado numérico |
+| `cancelar` | Esc |
+
+## 4. Convenciones de nombres
+
+- Archivos y carpetas en `snake_case`; clases y nodos en `PascalCase`; variables y funciones en `snake_case`; constantes en `MAYUSCULAS`.
+- **Código en inglés** (clases, funciones, variables y señales, por ejemplo `quest_state_changed`, `BattleManager`). Los **textos que ve el jugador**, los comentarios y la documentación van en **español**.
+- Excepciones ya fijadas en español: las acciones del Input Map (`mover_arriba`, `interactuar`...) y los valores de los estados de misión (`PENDIENTE`, `EN_CURSO`, `COMPLETADA`).
+- Los nombres en español que aparecen como ejemplo en algunos issues son orientativos; quien implemente decide el nombre final siguiendo esta regla.
+
+## 5. Autoloads (singletons)
+
+| Autoload | Responsabilidad | Señales principales |
+|----------|-----------------|---------------------|
+| `GameState` | Estado global de la partida: zona actual, zonas desbloqueadas y purificadas, ítems, criaturas purificadas, cápsulas vistas. | `zone_unlocked`, `capsule_seen` |
+| `QuestManager` | Registro de misiones y su estado (`PENDIENTE`, `EN_CURSO`, `COMPLETADA`). | `quest_state_changed`, `zone_cleaned` |
+| `AudioManager` *(fuera del avance)* | Música y efectos con control de volumen. | — |
+
+Regla: un autoload **no** conoce escenas concretas; las escenas se suscriben a sus señales. No se crea un `EventBus` general mientras las señales de estos dos autoloads alcancen.
+
+## 6. Recursos de datos (`game/resources/`)
+
+| Recurso | Campos principales |
+|---------|--------------------|
+| `CreatureData` | id, nombre, sprite, vida máxima, tipo, lista de ataques, zona, `es_jefe` |
+| `MoveData` | id, nombre, tipo ecológico, poder, precisión, descripción, mensaje de uso |
+| `QuestData` | id, zona, título, descripción, NPC que la otorga, objetivo (criatura a derrotar) |
+| `CapsuleData` | id, título, ilustración, páginas de texto (≤ 4 líneas), trivia opcional |
+| `ZoneData` *(opcional)* | id, nombre, escena del mapa, zona siguiente, misión principal, cápsula |
+
+La tabla de efectividad entre tipos ecológicos (p. ej. Reciclar fuerte contra plástico) vive en un recurso o diccionario propio, fuera del código de combate.
+
+## 7. Sistemas
+
+### 7.1 Visión general
 
 ```
                     ┌───────────────────────┐
@@ -25,44 +98,26 @@
              │                 │                  │
              └────────┬────────┴──────────────────┘
                       ▼
-          Autoloads: GameState · QuestManager · EventBus
+          Autoloads: GameState · QuestManager
                       ▼
           Recursos de datos (.tres): criaturas, ataques, misiones, cápsulas
 ```
 
-## 3. Autoloads (singletons)
-
-| Autoload | Responsabilidad | Señales principales |
-|----------|-----------------|---------------------|
-| `GameState` | Estado global de la partida: zona actual, zonas desbloqueadas y purificadas, ítems, criaturas purificadas, cápsulas vistas. | `zone_unlocked`, `capsule_seen` |
-| `QuestManager` | Registro de misiones y su estado (`PENDIENTE`, `EN_CURSO`, `COMPLETADA`). | `quest_state_changed`, `zone_cleaned` |
-| `EventBus` *(opcional)* | Canal de eventos para comunicar sistemas que no se conocen entre sí (p. ej. combate → mapa). | según necesidad |
-| `AudioManager` *(media)* | Música y efectos con control de volumen. | — |
-
-Regla: un autoload **no** conoce escenas concretas; las escenas se suscriben a sus señales.
-
-## 4. Recursos de datos (`resources/`)
-
-| Recurso | Campos principales |
-|---------|--------------------|
-| `CreatureData` | id, nombre, sprite, vida máxima, tipo, lista de ataques, zona, `es_jefe` |
-| `MoveData` | id, nombre, tipo ecológico, poder, precisión, descripción, mensaje de uso |
-| `QuestData` | id, zona, título, descripción, NPC que la otorga, objetivo (criatura a derrotar) |
-| `CapsuleData` | id, título, ilustración, páginas de texto (≤ 4 líneas), trivia opcional |
-| `ZoneData` *(opcional)* | id, nombre, escena del mapa, zona siguiente, misión principal, cápsula |
-
-Tabla de efectividad entre tipos ecológicos (p. ej. Reciclar fuerte contra plástico) en un recurso o diccionario propio, fuera del código de combate.
-
-## 5. Sistemas
-
-### 5.1 Overworld (RF-01, RF-04)
+### 7.2 Overworld (RF-01, RF-04)
 - **Jugador:** `CharacterBody2D` con movimiento en 4 direcciones, animaciones, cámara y un `RayCast2D`/`Area2D` frontal para interactuar.
-- **Mapa:** `TileMapLayer` (importado desde Tiled con YATI) con capa de colisión.
+- **Mapa:** `TileMapLayer` con capa de colisión. En el avance se dibuja a mano en Tiled; la importación con YATI queda para cuando se retome el pipeline OSM.
 - **Entidades:** NPCs, encuentros (criaturas visibles en el mapa), basura decorativa e interactuables, todos como escenas reutilizables.
 - **Orden de dibujo:** nodo contenedor con `y_sort_enabled`.
 - **Purificación:** un filtro (`CanvasLayer` + shader o `CanvasModulate`) vuelve gris el mapa; al completar la zona se anima a color y se retiran los nodos de basura. El filtro queda **entre el mundo y la UI** para no afectar a la interfaz.
+- **Capas de física:**
 
-Estructura sugerida de una zona:
+| Capa | Nombre | Contenido |
+|------|--------|-----------|
+| 1 | `mundo` | Tiles sólidos y obstáculos |
+| 2 | `jugador` | Jugador |
+| 3 | `interactuables` | NPCs, criaturas y señalética |
+
+Estructura de una zona:
 
 ```
 Zona (Node2D)
@@ -73,24 +128,25 @@ Zona (Node2D)
 └── UI (CanvasLayer)            → HUD de misión, diálogos, cápsula
 ```
 
-### 5.2 Misiones (RF-02, RF-06)
+### 7.3 Misiones (RF-02, RF-06)
 - `QuestManager` carga las `QuestData` y mantiene el estado de cada una.
 - Los NPC consultan el estado para elegir su diálogo y mostrar el indicador de misión.
-- Al cumplirse el objetivo, se emite `zone_cleaned`: `GameState` desbloquea la siguiente zona y la zona activa lanza la purificación y la cápsula.
+- Al cumplirse el objetivo se emite `zone_cleaned`: `GameState` desbloquea la siguiente zona y la zona activa lanza la purificación y la cápsula.
 
-### 5.3 Combate (RF-03)
+### 7.4 Combate (RF-03)
 Separación clara entre **lógica** y **presentación**:
 
 - **`BattleManager` (lógica, sin nodos visuales):** máquina de estados `ELEGIR_ACCION → EJECUTAR → TURNO_ENEMIGO → RESOLVER → FIN`. Calcula daño, precisión y efectividad y emite eventos (`move_executed`, `battle_finished`).
 - **`BattleScene` (presentación):** muestra sprites, barras de vida, menú y mensajes reproduciendo los eventos con animaciones.
 - Esta separación permite probar el combate sin interfaz y cambiar el arte sin tocar las reglas.
 
-### 5.4 Interfaz (RF-05, RF-07)
+### 7.5 Interfaz (RF-05, RF-07)
 - **Cuadro de diálogo** y **cápsula histórica** comparten un componente `TypewriterLabel` (efecto máquina de escribir).
 - Componentes: HUD de misión, barra de vida, transición de pantalla, menús.
+- La UI se arma con nodos `Control` (contenedores y `NinePatchRect`) y un `Theme` compartido (`game/assets/ui/theme.tres`), no con posiciones en píxeles.
 - La UI solo escucha señales; no modifica el estado del juego directamente.
 
-### 5.5 Flujo principal
+### 7.6 Flujo principal
 
 ```
 Exploración ─ hablar con NPC ─► misión EN_CURSO
@@ -105,79 +161,35 @@ Exploración ─ hablar con NPC ─► misión EN_CURSO
 
 `Main` retira la zona del árbol de nodos (sin liberarla) durante el combate y la restituye al volver, de modo que se conserva el estado del mapa.
 
-## 6. Capas de física (propuesta)
+### 7.7 Reparto de archivos para evitar conflictos
+El mapa y la ubicación de entidades viven en la escena de la zona; los diálogos, en la escena de cada NPC; los textos de misiones, criaturas y cápsulas, en los `.tres`. Así cada persona edita archivos distintos.
 
-| Capa | Nombre | Contenido |
-|------|--------|-----------|
-| 1 | `mundo` | Tiles sólidos y obstáculos |
-| 2 | `jugador` | Jugador |
-| 3 | `interactuables` | NPCs, criaturas y señalética |
+## 8. Plan de construcción de la Zona 1
 
-## 7. Estructura de carpetas
+Los issues están en el [tablero del proyecto](https://github.com/orgs/Poke-Guaytambo/projects/1).
 
-El repositorio separa el **juego** (proyecto de Godot, carpeta `game/`) de la documentación, las herramientas y la configuración de GitHub. Godot abre `game/project.godot`; todas las rutas del juego (`res://`) son relativas a `game/`.
+| Orden | Meta | Issues |
+|-------|------|--------|
+| 1 | Proyecto base *(hecho)* | #1 |
+| 2 | Jugador, cámara, colisiones e interacción | #3, #4, #5, #6 |
+| 3 | Estado global, diálogos, NPC y misiones | #2, #7, #8 |
+| 4 | Datos y reglas de combate | #12, #10 |
+| 5 | Escena e interfaz de combate | #9, #11, #28 |
+| 6 | Resultado, purificación visual y cápsula histórica | #13, #14, #15 |
+| 7 | Mapa de la Quinta, arte y textos | #16, #18, #19, #20 |
 
-```
-/
-├── game/                      # proyecto de Godot 4.7.2 (res:// apunta aquí)
-│   ├── project.godot
-│   ├── assets/                # sprites, tilesets, audio  (+ CREDITS.md)
-│   ├── autoload/              # GameState, QuestManager, ...
-│   ├── resources/             # scripts de Custom Resources y archivos .tres
-│   │   └── creatures/  moves/  quests/  capsules/
-│   ├── scenes/
-│   │   ├── main/              # escena raíz
-│   │   ├── overworld/         # jugador, NPC, encuentro, zonas
-│   │   ├── battle/
-│   │   └── ui/
-│   ├── scripts/               # lógica compartida
-│   └── maps/                  # .tmx y mapas importados
-├── tools/                     # herramientas fuera del juego
-│   ├── osm_pipeline/          # pipeline OSM → Tiled (Python)
-│   └── github/                # scripts de configuración de GitHub
-├── docs/                      # requisitos, arquitectura, gestión
-└── .github/                   # plantillas de issues y PR, workflows
-```
+**Fuera del avance de diciembre:** pipeline OSM (#17), audio (#21), menús (#22), tutorial (#23) y pruebas en laptops del club (#24).
 
-## 8. Configuración del proyecto
+## 9. Decisiones
 
-- **Motor:** Godot 4.7.2 estable (versión estándar, no .NET). El proyecto está en `game/project.godot`.
-- **Renderizador:** *Compatibility* (OpenGL), más tolerante con GPU modestas (RNF-01) y apto para exportar a Web. Decisión provisional; se confirma con las pruebas en las laptops del club.
-- **Resolución base:** **480×270** (16:9), con ventana inicial de 1440×810 y escalado entero del viewport (`stretch mode = viewport`, `scale mode = integer`).
-- **Tamaño de tile:** **16×16 px**.
-- **Pixel art:** filtro de textura *nearest* por defecto.
-- **Controles (Input Map):**
+**Cerradas**
+- Godot 4.7.2 estándar, GDScript.
+- Resolución base 480×270, tiles de 16×16, escalado entero.
+- Renderizador *Compatibility* (provisional hasta #24).
+- El juego vive en `game/`; no se usa `EventBus` por ahora.
+- Convención de nombres: sección 4.
 
-| Acción | Teclas |
-|--------|--------|
-| `mover_arriba`, `mover_abajo`, `mover_izquierda`, `mover_derecha` | WASD y flechas |
-| `interactuar` | E, Enter y Enter del teclado numérico |
-| `cancelar` | Esc |
-
-- **Escena principal:** `res://scenes/main/main.tscn` (script `scripts/main.gd`).
-
-## 9. Pipeline de mapas
-
-```
-Overpass Turbo (.geojson)
-   └► tools/osm_pipeline (Python, GeoPandas/Shapely, UTM 17S – EPSG:32717)
-        └► Tiled 1.12 (.tmx)
-             └► plugin YATI 2.2.9 ► maps/
-```
-
-- Mientras el mapa real no esté listo, se usa un **mapa provisional** que el mapa importado reemplaza sin cambiar código.
-- El mapa y la ubicación de entidades viven en la escena de la zona; los diálogos en la escena de cada NPC; los textos de misiones, criaturas y cápsulas en los `.tres`. Así cada persona edita archivos distintos.
-
-## 10. Plan de construcción (Zona 1)
-
-1. Proyecto base, controles y mapa de prueba con colisiones.
-2. Jugador, cámara e interacción.
-3. NPC, diálogos y `QuestManager`.
-4. `BattleManager` y escena de combate con una criatura.
-5. Purificación visual y cápsula histórica.
-6. Mapa real (pipeline OSM), arte y audio definitivos.
-7. Pulido, pruebas en laptops del club y presentación del avance.
-
-## 11. Decisiones pendientes
-
-Se registran aquí las decisiones de arquitectura que el equipo vaya cerrando (resolución base, renderizador final, uso de `EventBus`, guardado de partida).
+**Pendientes**
+- **Pantalla completa y franjas negras:** con el escalado entero actual, en pantallas que no son múltiplo de 480×270 aparecen franjas negras. Alternativa probada: `canvas_items` + `expand` + `fractional` y una tecla F11. Conviene decidirlo antes de armar la interfaz.
+- Guardado de partida (fuera del avance).
+- Pipeline de mapas OSM (fuera del avance).
