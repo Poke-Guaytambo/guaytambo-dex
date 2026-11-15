@@ -1,4 +1,4 @@
-# Especificación de requisitos — Ambato Limpiecito
+# Especificación de requisitos — Poke-Guaytambo
 
 **Versión:** 1.1 · **Fuente:** documento "Especificación de Requisitos" del equipo, ampliado y detallado.
 

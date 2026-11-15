@@ -5,4 +5,4 @@ Registra cada uno aquí en el mismo PR que lo agrega.
 
 | Archivo / pack | Autor | Licencia | Fuente (URL) | Usado en |
 |----------------|-------|----------|--------------|----------|
-| `icon.svg` | Equipo Ambato Limpiecito | Propio | — | Ícono del proyecto |
+| `icon.svg` | Equipo Poke-Guaytambo | Propio | — | Ícono del proyecto |

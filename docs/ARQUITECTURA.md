@@ -1,4 +1,4 @@
-# Arquitectura — Ambato Limpiecito
+# Arquitectura — Poke-Guaytambo
 
 **Estado:** propuesta inicial, a validar por el equipo y ajustar durante el desarrollo. Los requisitos están en [REQUISITOS.md](REQUISITOS.md).
 

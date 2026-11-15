@@ -6,4 +6,4 @@ extends Node2D
 
 
 func _ready() -> void:
-	print("Ambato Limpiecito - Godot %s" % Engine.get_version_info().string)
+	print("Poke-Guaytambo - Godot %s" % Engine.get_version_info().string)

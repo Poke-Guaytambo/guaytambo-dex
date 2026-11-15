@@ -1,6 +1,6 @@
 # Guía de contribución
 
-Gracias por colaborar en **Ambato Limpiecito**. Para evitar conflictos (sobre todo con archivos de escena de Godot), todo el equipo sigue estas reglas.
+Gracias por colaborar en **Poke-Guaytambo**. Para evitar conflictos (sobre todo con archivos de escena de Godot), todo el equipo sigue estas reglas.
 
 ## 1. Entorno
 

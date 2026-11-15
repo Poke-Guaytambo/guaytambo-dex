@@ -1,4 +1,4 @@
-# Ambato Limpiecito
+# Poke-Guaytambo
 
 > RPG 2D por turnos estilo Pokémon clásico para promocionar la carrera de **Ingeniería de Software** en colegios y difundir la cultura y el cuidado ambiental de **Ambato**.
 
