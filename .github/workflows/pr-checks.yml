@@ -24,7 +24,7 @@ jobs:
         env:
           BRANCH: ${{ github.head_ref }}
         run: |
-          pattern='^(feature|fix|art|audio|map|docs|chore)/[a-z0-9][a-z0-9-]*$'
+          pattern='^(develop|(feature|fix|art|audio|map|docs|chore)/[a-z0-9][a-z0-9-]*|release/[a-z0-9.-]+)$'
           if ! echo "$BRANCH" | grep -Eq "$pattern"; then
             echo "::error::La rama debe ser 'tipo/descripcion-en-kebab-case'. Recibido: $BRANCH"
             exit 1
