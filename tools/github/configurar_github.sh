@@ -66,6 +66,9 @@ cuerpo_final() {
 }
 
 declare -a NUMEROS
+# Filas del backlog cuyo número de issue en GitHub no coincide con su posición
+# (los números #25 a #27 los usaron PRs). Formato: [fila]=número_de_issue.
+declare -A EXCEPCIONES=([25]=28)
 
 issues() {
   num=$(numero_proyecto || true)
@@ -92,7 +95,7 @@ issues() {
 }
 
 actualizar() {
-  # Supone que los issues se crearon en orden: #1..#24 = filas del backlog.
+  # Supone que los issues se crearon en orden (fila N = issue #N), salvo EXCEPCIONES.
   i=0
   declare -a titulos dependencias
   while IFS=$'\t' read -r titulo _etq _desc _criterios deps; do
@@ -100,18 +103,19 @@ actualizar() {
     i=$((i+1))
     titulos[$i]="$titulo"
     dependencias[$i]="${deps:-}"
-    NUMEROS[$i]=$i
+    NUMEROS[$i]="${EXCEPCIONES[$i]:-$i}"
   done < "$DIR/backlog_zona1.tsv"
 
   for j in $(seq 1 "$i"); do
-    actual=$(gh issue view "$j" --repo "$REPO" --json title --jq .title)
+    n="${NUMEROS[$j]}"
+    actual=$(gh issue view "$n" --repo "$REPO" --json title --jq .title)
     if [ "$actual" != "${titulos[$j]}" ]; then
-      echo "Aviso: el issue #$j ('$actual') no coincide con el backlog; se omite."
+      echo "Aviso: el issue #$n ('$actual') no coincide con el backlog; se omite."
       continue
     fi
-    gh issue edit "$j" --repo "$REPO" \
+    gh issue edit "$n" --repo "$REPO" \
       --body "$(cuerpo_final "$j" "${dependencias[$j]}")" >/dev/null
-    echo "Actualizado #$j"
+    echo "Actualizado #$n"
   done
 }
 

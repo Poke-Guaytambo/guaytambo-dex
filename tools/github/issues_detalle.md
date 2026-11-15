@@ -236,26 +236,26 @@ Programar las **reglas del combate por turnos**, separadas de lo visual para pod
 
 === 11 ===
 ## Objetivo
-Que el combate **se vea y se pueda jugar**: menú, barras de vida y mensajes conectados a las reglas.
+Que el combate **se pueda jugar desde el menú**: elegir acciones y ataques y ver los mensajes del combate conectados a las reglas. Las barras de vida y las animaciones son otro issue.
 
 ## Qué hay que hacer
 1. Menú principal de acciones: **Atacar**, **Ítem** (deshabilitado por ahora) y **Huir/Reintentar**.
 2. Submenú de ataques: los 4 ataques ecológicos con su nombre y una breve descripción.
-3. `scenes/battle/creature_hud.tscn`: nombre y barra de vida, con animación suave al bajar.
-4. Mensajes de combate con `TypewriterLabel` ("¡Reciclar fue muy efectivo!"), reproducidos en orden.
-5. Reproducir los eventos que emite `BattleManager` con animaciones simples (sacudida, parpadeo al recibir daño).
-6. Navegación con teclado (flechas, `interactuar`, `cancelar`) y con el ratón.
-7. Mientras se reproducen los mensajes, el menú queda bloqueado.
+3. Mensajes de combate con `TypewriterLabel` ("¡Reciclar fue muy efectivo!"), reproducidos en orden a partir de los eventos que emite `BattleManager`.
+4. Navegación con teclado (flechas, `interactuar`, `cancelar`) y con el ratón.
+5. Mientras se reproducen los mensajes, el menú queda bloqueado.
+6. Dejar puntos de enganche claros (señales o métodos) para que el issue de barras de vida y animaciones se conecte sin tocar este código.
 
 ## Fuera de alcance (NO hacer aquí)
+- Barras de vida y animaciones de combate (issue aparte).
 - Cambiar las reglas del combate.
 - Pantalla de derrota y reintento (otro issue).
 
 ## Criterios de aceptación
-- [ ] Se puede jugar un combate completo desde la interfaz, sin consola.
-- [ ] Las barras de vida bajan de forma animada y reflejan el estado real.
+- [ ] Se puede jugar un combate completo desde el menú, sin consola.
 - [ ] Los mensajes se muestran en el orden correcto y no se pisan.
-- [ ] El menú no responde mientras se reproducen animaciones.
+- [ ] El menú no responde mientras se reproducen los mensajes.
+- [ ] Hay puntos de enganche documentados para las barras de vida y las animaciones.
 
 === 12 ===
 ## Objetivo
@@ -541,3 +541,27 @@ Comprobar que **la demo completa corre bien en equipos modestos** y dejar regist
 - [ ] La demo se completa de principio a fin sin cierres inesperados.
 - [ ] El renderizador final quedó elegido y documentado.
 - [ ] Los problemas encontrados tienen su issue.
+
+=== 25 ===
+## Objetivo
+Que el combate **se vea vivo**: barras de vida que bajan de forma suave y animaciones simples al atacar y recibir daño. Es la parte visual que complementa el menú y los mensajes.
+
+## Qué hay que hacer
+1. `scenes/battle/creature_hud.tscn`: nombre de la criatura y barra de vida, para el jugador y para el enemigo.
+2. Animar la barra al bajar o subir (con un `Tween`), en vez de saltar de golpe. El color puede cambiar según la vida restante (por ejemplo verde, amarillo, rojo).
+3. Animaciones simples reproducidas con los eventos de `BattleManager` (`move_executed`, `hp_changed`): sacudida al recibir daño, parpadeo, y un pequeño movimiento al atacar.
+4. Animación de victoria y de derrota (por ejemplo, la criatura se desvanece al ser vencida).
+5. Conectarse a los puntos de enganche que deja el issue del menú y los mensajes, sin modificar su lógica.
+6. Las animaciones no deben bloquear el combate más de 1 o 2 segundos por turno.
+
+## Fuera de alcance (NO hacer aquí)
+- El menú de acciones y los mensajes (issue aparte).
+- Cambiar las reglas del combate.
+- Efectos de partículas o sonido.
+
+## Criterios de aceptación
+- [ ] Las barras reflejan siempre la vida real y bajan de forma animada.
+- [ ] Atacar y recibir daño se nota visualmente.
+- [ ] Al ser vencida, la criatura tiene una animación de salida.
+- [ ] Las animaciones no se superponen ni quedan a medias si se salta un mensaje.
+
