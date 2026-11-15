@@ -75,15 +75,14 @@ Reglas:
 
 ## 6. Reuniones y cadencia sugerida
 
-- **Reunión semanal (30 min):** revisar el tablero, desbloquear tareas y repartir las siguientes.
+- **Reunión semanal (30 min):** revisar el tablero, desbloquear tareas y repartir las siguientes. Se anima a tomar tareas de un área que no se haya trabajado antes (etiqueta `good first issue`); quien la hace pide la revisión a alguien con experiencia en esa área.
 - **Revisión de avance:** al cerrar cada hito, demo jugable en la laptop del club.
 
 ## 7. Configuración de la organización (checklist para administradores)
 
-- [ ] Crear los equipos (p. ej. `desarrollo`, `arte-audio`, `contenido`) y asignar miembros.
+- [ ] Dar rol **Write** en el repo a todos los miembros (directo, o con un único equipo `desarrollo` si el grupo crece). No se crean equipos por área: todos pueden trabajar en todo.
 - [ ] Activar protección de `main`: PR obligatorio, 1 aprobación, estado `PR checks` requerido, sin push directo, sin force-push.
 - [ ] Activar *Squash merge* únicamente y borrado automático de ramas al fusionar.
 - [ ] Ejecutar `bash tools/github/configurar_github.sh` (etiquetas, hito, proyecto e issues iniciales). Requiere `gh auth login` y `gh auth refresh -s project`.
 - [ ] Configurar vistas y automatizaciones del proyecto (sección 2).
-- [ ] Añadir `CODEOWNERS` cuando estén definidos los responsables por área.
 - [ ] Definir la licencia del repositorio.
