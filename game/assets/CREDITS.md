@@ -6,3 +6,4 @@ Registra cada uno aquí en el mismo PR que lo agrega.
 | Archivo / pack | Autor | Licencia | Fuente (URL) | Usado en |
 |----------------|-------|----------|--------------|----------|
 | `icon.svg` | Equipo Poke-Guaytambo | Propio | — | Ícono del proyecto |
+| `overworld/player_placeholder.png` | Equipo Poke-Guaytambo | Propio | — | Sprite provisional del jugador (overworld) |
