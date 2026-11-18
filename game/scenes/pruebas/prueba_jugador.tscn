@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/overworld/player.tscn" id="1_player"]
+
+[node name="PruebaJugador" type="Node2D"]
+
+[node name="Suelo" type="ColorRect" parent="."]
+offset_right = 480.0
+offset_bottom = 270.0
+mouse_filter = 2
+color = Color(0.62, 0.78, 0.55, 1)
+
+[node name="Matorral1" type="ColorRect" parent="."]
+offset_left = 112.0
+offset_top = 72.0
+offset_right = 128.0
+offset_bottom = 88.0
+mouse_filter = 2
+color = Color(0.2, 0.45, 0.22, 1)
+
+[node name="Matorral2" type="ColorRect" parent="."]
+offset_left = 352.0
+offset_top = 88.0
+offset_right = 368.0
+offset_bottom = 104.0
+mouse_filter = 2
+color = Color(0.2, 0.45, 0.22, 1)
+
+[node name="Matorral3" type="ColorRect" parent="."]
+offset_left = 136.0
+offset_top = 200.0
+offset_right = 152.0
+offset_bottom = 216.0
+mouse_filter = 2
+color = Color(0.2, 0.45, 0.22, 1)
+
+[node name="Matorral4" type="ColorRect" parent="."]
+offset_left = 344.0
+offset_top = 208.0
+offset_right = 360.0
+offset_bottom = 224.0
+mouse_filter = 2
+color = Color(0.2, 0.45, 0.22, 1)
+
+[node name="Jugador" parent="." instance=ExtResource("1_player")]
+position = Vector2(240, 135)
+
+[node name="Ayuda" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 320.0
+offset_bottom = 30.0
+text = "WASD / Flechas para moverse"

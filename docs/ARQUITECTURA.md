@@ -42,6 +42,7 @@ Se agregarán `game/addons/` (plugin YATI) y `tools/` (pipeline de mapas OSM) si
 - **Renderizador:** *Compatibility* (OpenGL), más tolerante con GPU modestas (RNF-01) y apto para exportar a Web. Provisional hasta probar en las laptops del club.
 - **Resolución base:** **480×270** (16:9), ventana inicial de 1440×810, `stretch mode = viewport` y `scale mode = integer`.
 - **Tamaño de tile:** **16×16 px**.
+- **Tamaño de personajes:** **16×32 px por cuadro** para el jugador y los NPCs (2 tiles de alto). Los pies quedan en la parte baja del cuadro: la colisión se coloca en los pies y el orden de dibujo (y_sort) se calcula desde ellos.
 - **Pixel art:** filtro de textura *nearest* por defecto.
 - **Escena principal:** `res://scenes/main/main.tscn`.
 - **Controles (Input Map):**
@@ -104,7 +105,8 @@ La tabla de efectividad entre tipos ecológicos (p. ej. Reciclar fuerte contra p
 ```
 
 ### 7.2 Overworld (RF-01, RF-04)
-- **Jugador:** `CharacterBody2D` con movimiento en 4 direcciones, animaciones, cámara y un `RayCast2D`/`Area2D` frontal para interactuar.
+- **Jugador:** `CharacterBody2D` con movimiento en 4 direcciones, animaciones, cámara y un `RayCast2D`/`Area2D` frontal para interactuar. La escena es `scenes/overworld/player.tscn` y el script `scripts/overworld/player.gd`.
+- **Hoja de sprites del jugador (provisional):** `assets/overworld/player_placeholder.png`, 48×128 px con cuadros de 16×32 (columnas: reposo, paso A, paso B) y filas en orden **abajo, izquierda, derecha, arriba**. Animaciones `idle_<dirección>` y `walk_<dirección>`; el arte real reemplaza el PNG conservando este formato, sin tocar código. El origen del nodo está en los pies (offset del sprite `(0, -16)` y colisión pequeña en `(0, -4)`) para que `y_sort` y la interacción partan del punto de contacto.
 - **Mapa:** `TileMapLayer` con capa de colisión. En el avance se dibuja a mano en Tiled; la importación con YATI queda para cuando se retome el pipeline OSM.
 - **Entidades:** NPCs, encuentros (criaturas visibles en el mapa), basura decorativa e interactuables, todos como escenas reutilizables.
 - **Orden de dibujo:** nodo contenedor con `y_sort_enabled`.
