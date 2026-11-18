@@ -8,6 +8,9 @@ extends CharacterBody2D
 ## - Animaciones: `idle_<direccion>` y `walk_<direccion>` (down, left, right, up).
 ## El arte definitivo solo debe reemplazar el PNG conservando este formato.
 ##
+## Origen del nodo en los pies: el sprite usa offset (0, -16) y la colision una
+## forma pequena en (0, -4). Asi `y_sort` y el RayCast de interaccion parten del suelo.
+##
 ## API para otros sistemas:
 ## - `direccion_mirada`: vector unitario (UP, DOWN, LEFT o RIGHT) con la ultima
 ##   direccion hacia la que mira el personaje. Lo usa el sistema de interaccion.
@@ -19,8 +22,8 @@ extends CharacterBody2D
 
 const SPEED := 60.0
 
-## Al pulsar varias direcciones gana una sola, en este orden:
-## arriba > abajo > izquierda > derecha (sin diagonales).
+## Al pulsar varias direcciones gana una sola (sin diagonales): la ultima tecla
+## pulsada tiene prioridad; al soltarla vuelve a la que siga presionada.
 const DIRECTIONS := {
 	&"mover_arriba": Vector2.UP,
 	&"mover_abajo": Vector2.DOWN,
@@ -39,6 +42,7 @@ const ANIMATION_SUFFIXES := {
 var direccion_mirada: Vector2 = Vector2.DOWN
 
 var _movement_enabled := true
+var _last_action: StringName = &""
 
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -73,8 +77,18 @@ func set_puede_moverse(value: bool) -> void:
 
 func _read_direction() -> Vector2:
 	for action: StringName in DIRECTIONS:
+		if Input.is_action_just_pressed(action):
+			_last_action = action
+
+	if _last_action != &"" and Input.is_action_pressed(_last_action):
+		return DIRECTIONS[_last_action]
+
+	for action: StringName in DIRECTIONS:
 		if Input.is_action_pressed(action):
+			_last_action = action
 			return DIRECTIONS[action]
+
+	_last_action = &""
 	return Vector2.ZERO
 
 
