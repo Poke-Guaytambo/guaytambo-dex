@@ -106,7 +106,7 @@ La tabla de efectividad entre tipos ecológicos (p. ej. Reciclar fuerte contra p
 
 ### 7.2 Overworld (RF-01, RF-04)
 - **Jugador:** `CharacterBody2D` con movimiento en 4 direcciones, animaciones, cámara y un `RayCast2D`/`Area2D` frontal para interactuar. La escena es `scenes/overworld/player.tscn` y el script `scripts/overworld/player.gd`.
-- **Hoja de sprites del jugador (provisional):** `assets/overworld/player_placeholder.png`, 48×128 px con cuadros de 16×32 (columnas: reposo, paso A, paso B) y filas en orden **abajo, izquierda, derecha, arriba**. Animaciones `idle_<dirección>` y `walk_<dirección>`; el arte real reemplaza el PNG conservando este formato, sin tocar código.
+- **Hoja de sprites del jugador (provisional):** `assets/overworld/player_placeholder.png`, 48×128 px con cuadros de 16×32 (columnas: reposo, paso A, paso B) y filas en orden **abajo, izquierda, derecha, arriba**. Animaciones `idle_<dirección>` y `walk_<dirección>`; el arte real reemplaza el PNG conservando este formato, sin tocar código. El origen del nodo está en los pies (offset del sprite `(0, -16)` y colisión pequeña en `(0, -4)`) para que `y_sort` y la interacción partan del punto de contacto.
 - **Mapa:** `TileMapLayer` con capa de colisión. En el avance se dibuja a mano en Tiled; la importación con YATI queda para cuando se retome el pipeline OSM.
 - **Entidades:** NPCs, encuentros (criaturas visibles en el mapa), basura decorativa e interactuables, todos como escenas reutilizables.
 - **Orden de dibujo:** nodo contenedor con `y_sort_enabled`.
