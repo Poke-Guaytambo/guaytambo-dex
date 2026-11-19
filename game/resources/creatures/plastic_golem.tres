@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://resources/move_data.gd" id="1_kiccb"]
+[ext_resource type="Resource" path="res://resources/moves/bottle_slam.tres" id="2_sihtf"]
+[ext_resource type="Resource" path="res://resources/moves/microplastic_rain.tres" id="3_fld0k"]
+[ext_resource type="Script" path="res://resources/creature_data.gd" id="4_urxfp"]
+[ext_resource type="Texture2D" path="res://assets/battle/plastic_golem_placeholder.png" id="5_7qrre"]
+
+[resource]
+script = ExtResource("4_urxfp")
+id = &"plastic_golem"
+display_name = "Plasti-Gólem"
+sprite = ExtResource("5_7qrre")
+max_hp = 240
+moves = Array[ExtResource("1_kiccb")]([ExtResource("2_sihtf"), ExtResource("3_fld0k")])
+is_boss = true
