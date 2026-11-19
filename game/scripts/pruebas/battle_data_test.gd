@@ -64,20 +64,20 @@ func _load_all(dir_path: String) -> Dictionary:
 
 
 func _validate_move(move: MoveData) -> void:
-	_log("%-26s %-10s poder %3d  precision %3d%%" % [
+	_log("%-26s %-10s poder %3d  precisión %3d%%" % [
 		move.display_name, TypeChart.MoveType.keys()[move.type], move.power, move.accuracy])
 	if move.display_name.is_empty() or move.description.is_empty() or move.use_message.is_empty():
-		_fail("%s: falta nombre, descripcion o mensaje de uso" % move.id)
+		_fail("%s: falta nombre, descripción o mensaje de uso" % move.id)
 
 
 func _validate_creature(creature: CreatureData) -> void:
 	_log("%-16s %-8s vida %3d  zona %d  jefe %s  ataques %d" % [
 		creature.display_name, TypeChart.CreatureType.keys()[creature.type],
-		creature.max_hp, creature.zone, creature.is_boss, creature.moves.size()])
+		creature.max_hp, creature.zone, "sí" if creature.is_boss else "no", creature.moves.size()])
 	if creature.display_name.is_empty() or creature.sprite == null:
 		_fail("%s: falta nombre o sprite" % creature.id)
 	if creature.moves.is_empty() or creature.moves.has(null):
-		_fail("%s: lista de ataques vacia o con huecos" % creature.id)
+		_fail("%s: lista de ataques vacía o con huecos" % creature.id)
 
 
 ## Compara el mejor ataque contra usar solo ataques neutrales.
@@ -106,9 +106,9 @@ func _check_balance(enemy: CreatureData, player_moves: Array[MoveData]) -> void:
 	var neutral_taken := neutral_turns * enemy_damage
 	var target := BOSS_TURNS if enemy.is_boss else COMMON_TURNS
 
-	_log("%s: con %s gana en %d turnos (meta %d-%d) y recibe ~%d de dano" % [
+	_log("%s: con %s gana en %d turnos (meta %d-%d) y recibe ~%d de daño" % [
 		enemy.display_name, best_name, turns, target.x, target.y, roundi(taken)])
-	_log("    solo con ataques neutrales: %d turnos y ~%d de dano" % [
+	_log("    solo con ataques neutrales: %d turnos y ~%d de daño" % [
 		neutral_turns, roundi(neutral_taken)])
 
 	if turns < target.x or turns > target.y:
