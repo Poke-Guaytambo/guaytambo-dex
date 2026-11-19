@@ -74,13 +74,53 @@ Regla: un autoload **no** conoce escenas concretas; las escenas se suscriben a s
 
 | Recurso | Campos principales |
 |---------|--------------------|
-| `CreatureData` | id, nombre, sprite, vida máxima, tipo, lista de ataques, zona, `es_jefe` |
-| `MoveData` | id, nombre, tipo ecológico, poder, precisión, descripción, mensaje de uso |
+| `CreatureData` (`creature_data.gd`) | `id`, `display_name`, `sprite`, `max_hp`, `type`, `moves`, `zone`, `is_boss` |
+| `MoveData` (`move_data.gd`) | `id`, `display_name`, `type`, `power`, `accuracy` (0–100), `description`, `use_message` (`{user}` = quien ataca) |
 | `QuestData` | id, zona, título, descripción, NPC que la otorga, objetivo (criatura a derrotar) |
 | `CapsuleData` | id, título, ilustración, páginas de texto (≤ 4 líneas), trivia opcional |
 | `ZoneData` *(opcional)* | id, nombre, escena del mapa, zona siguiente, misión principal, cápsula |
 
-La tabla de efectividad entre tipos ecológicos (p. ej. Reciclar fuerte contra plástico) vive en un recurso o diccionario propio, fuera del código de combate.
+El `id` de cada `.tres` coincide con el nombre del archivo (por ejemplo `resources/moves/recycle.tres` → `&"recycle"`).
+
+### 6.1 Tipos ecológicos y efectividad
+
+La tabla vive en `resources/type_chart.gd` (`TypeChart`), separada del código de combate: el `BattleManager` solo llama a `TypeChart.get_multiplier(tipo_ataque, tipo_criatura)`.
+
+- **Tipos de ataque (`MoveType`):** `RECYCLE` (Reciclar), `UV_FILTER` (Filtro UV), `FIREWALL` (Cortafuegos), `COMPOST` (Compostaje) y `POLLUTION` (ataques de las criaturas).
+- **Tipos de criatura (`CreatureType`):** `PLASTIC`, `ORGANIC`, `CHEMICAL`, `SMOG` y `GUARDIAN` (bando del jugador).
+
+| Ataque | Fuerte (×2) | Débil (×0,5) |
+|--------|-------------|--------------|
+| Reciclar | Plástico | Orgánico |
+| Compostaje | Orgánico | Plástico |
+| Filtro UV | Químico | — |
+| Cortafuegos | Smog (quemas) | — |
+
+Toda combinación no listada vale ×1. Químico y Smog se usarán desde la Zona 2; en la Zona 1, Filtro UV y Cortafuegos son neutrales.
+
+### 6.2 Contenido de la Zona 1
+
+| Ataque | Archivo | Tipo | Poder | Precisión | Usuario |
+|--------|---------|------|-------|-----------|---------|
+| Reciclar | `recycle` | RECYCLE | 20 | 95 | Jugador |
+| Filtro UV | `uv_filter` | UV_FILTER | 25 | 85 | Jugador |
+| Cortafuegos | `firewall` | FIREWALL | 30 | 75 | Jugador |
+| Compostaje | `compost` | COMPOST | 20 | 95 | Jugador |
+| Enredadera | `vine_tangle` | POLLUTION | 12 | 95 | Maleza Tóxica |
+| Esporas Tóxicas | `toxic_spores` | POLLUTION | 16 | 80 | Maleza Tóxica |
+| Golpe de Botella | `bottle_slam` | POLLUTION | 18 | 90 | Plasti-Gólem |
+| Lluvia de Microplásticos | `microplastic_rain` | POLLUTION | 24 | 75 | Plasti-Gólem |
+
+| Criatura | Archivo | Tipo | Vida | Jefe |
+|----------|---------|------|------|------|
+| Maleza Tóxica | `toxic_weed` | ORGANIC | 130 | No |
+| Plasti-Gólem | `plastic_golem` | PLASTIC | 240 | Sí |
+
+**Balance inicial** (daño esperado por turno = poder × efectividad × precisión; vida de referencia del jugador 150, que define el #10):
+- Maleza Tóxica: con Compostaje se gana en ~4 turnos (meta 3–5).
+- Plasti-Gólem: con Reciclar se gana en ~7 turnos recibiendo ~120 de daño (meta 5–8); usando solo ataques neutrales tarda ~11 turnos y el jugador pierde (~188 de daño), así que el jefe exige usar el tipo correcto.
+
+La escena `scenes/pruebas/battle_data_test.tscn` valida los `.tres` y recalcula estas cifras; ejecútala tras cambiar valores.
 
 ## 7. Sistemas
 
