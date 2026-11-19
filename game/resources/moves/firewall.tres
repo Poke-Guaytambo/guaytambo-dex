@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MoveData" format=3]
+
+[ext_resource type="Script" path="res://resources/move_data.gd" id="1_017fa"]
+
+[resource]
+script = ExtResource("1_017fa")
+id = &"firewall"
+display_name = "Cortafuegos"
+type = 2
+power = 30
+accuracy = 75
+description = "Frena las quemas con una barrera. Potente, pero puede fallar."
+use_message = "¡{user} usó Cortafuegos!"

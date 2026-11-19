@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CreatureData" format=3]
+
+[ext_resource type="Script" path="res://resources/move_data.gd" id="1_dbqjm"]
+[ext_resource type="Resource" path="res://resources/moves/vine_tangle.tres" id="2_xq11b"]
+[ext_resource type="Resource" path="res://resources/moves/toxic_spores.tres" id="3_x2tbn"]
+[ext_resource type="Script" path="res://resources/creature_data.gd" id="4_vxa20"]
+[ext_resource type="Texture2D" path="res://assets/battle/toxic_weed_placeholder.png" id="5_1pht8"]
+
+[resource]
+script = ExtResource("4_vxa20")
+id = &"toxic_weed"
+display_name = "Maleza Tóxica"
+sprite = ExtResource("5_1pht8")
+max_hp = 130
+type = 1
+moves = Array[ExtResource("1_dbqjm")]([ExtResource("2_xq11b"), ExtResource("3_x2tbn")])

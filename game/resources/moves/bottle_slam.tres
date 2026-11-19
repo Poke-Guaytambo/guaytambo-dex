@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="MoveData" format=3]
+
+[ext_resource type="Script" path="res://resources/move_data.gd" id="1_hwhyt"]
+
+[resource]
+script = ExtResource("1_hwhyt")
+id = &"bottle_slam"
+display_name = "Golpe de Botella"
+power = 18
+accuracy = 90
+description = "Embiste con su cuerpo de botellas aplastadas."
+use_message = "¡{user} usó Golpe de Botella!"
